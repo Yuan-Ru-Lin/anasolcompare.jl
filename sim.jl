@@ -3,8 +3,7 @@ using Plots, SolidStateDetectors, Unitful
 sim = Simulation{Float64}("configs/simple.yaml")
 simulate!(sim, refinement_limits = [0.2, 0.1, 0.05, 0.01]);
 plt1 = plot(sim.electric_potential, colormap=:magma,
-            title="", colorbar_title="", xunit=u"cm", yunit=u"cm",
-            unitformat=:square, ratio=1)
+            title="", colorbar_title="", unitformat=:square, ratio=1)
 
 raxis = sim.electric_potential.grid.axes[1]
 zaxis = sim.electric_potential.grid.axes[3]
@@ -18,22 +17,22 @@ numpotential = sim.electric_potential[:,1,:]
 dif = anapotential .- numpotential
 plt3 = heatmap(raxis, zaxis, dif, clims=extrema(dif))
 
-sim2 = Simulation{Float64}("configs/simple.yaml")
+sim2 = Simulation{Float64}("configs/hollow.yaml")
 simulate!(sim2, refinement_limits = [0.2, 0.1, 0.05, 0.01]);
 plt4 = plot(sim2.electric_potential, colormap=:magma,
-            title="", colorbar_title="", xunit=u"cm", yunit=u"cm",
-            unitformat=:square, ratio=1)
+            title="", colorbar_title="", unitformat=:square, ratio=1)
+
 raxis2 = sim2.electric_potential.grid.axes[1]
 zaxis2 = sim2.electric_potential.grid.axes[3]
-plt5 = heatmap(raxis2, zaxis2, (r,z)->Φ₂(100r,100z,0.3f0,0.7f0,1:200),
+plt5 = heatmap(raxis2, zaxis2, (r,z)->Φ₂(100r,100z,0.3,0.7,1:200),
         colormap=:magma, clims=(-1.0, 0.0), ratio=1,
-        xlabel="r [m]", ylabel="z [m]"))
+        xlabel="r [m]", ylabel="z [m]")
 
-function savefigs()
-    savefig(plt1, "../report/figures/simple_numerical_potential.png")
-    savefig(plt2, "../report/figures/simple_analytical_potential.png")
-    savefig(plt3, "../report/figures/simple_difference.png")
-    savefig(plt4, "../report/figures/hollow_numerical_potential.png")
-    savefig(plt5, "../report/figures/hollow_analytical_potential.png")
+function savefigs(dir="../report/figures/")
+    savefig(plt1, dir*"simple_numerical_potential.png")
+    savefig(plt2, dir*"simple_analytical_potential.png")
+    savefig(plt3, dir*"simple_difference.png")
+    savefig(plt4, dir*"hollow_numerical_potential.png")
+    savefig(plt5, dir*"hollow_analytical_potential.png")
 end
 
