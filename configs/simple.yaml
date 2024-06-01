@@ -1,0 +1,47 @@
+units:
+  length: mm
+  angle: deg
+grid:
+  coordinates: cylindrical
+  axes:
+    r: 1.0cm
+    z:
+      from: 0
+      to: 1.0cm
+medium: vacuum
+detectors:
+- semiconductor:
+    material: HPGe
+    geometry:
+      tube:
+        r: 5cm
+        h: 6cm
+        orgin:
+          z: 3cm
+  contacts:
+  - material: HPGe
+    id: 1
+    potential: 0
+    geometry:
+      union:
+        - tube:
+            r:
+              from: 1.0cm
+              to: 1.0cm
+            h: 1cm
+            origin:
+              z: 0.5cm
+        - tube:
+            r: 1.0cm
+            h: 0.01cm
+            origin:
+              z: -0.005cm
+  - material: HPGe
+    id: 2
+    potential: -1
+    geometry:
+      tube:
+        r: 1cm
+        h: 0.01cm
+        origin:
+          z: 1.005cm
